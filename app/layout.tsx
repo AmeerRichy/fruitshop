@@ -6,9 +6,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
   title: { default: "Fruit Shop | Fresh Fruit Delivery Lahore", template: "%s | Fruit Shop" },
   description: "Premium, quality-checked fresh fruit delivered across Lahore with secure online payment and cash on delivery.",
-  icons: {
-    icon: "/logo.png",
-  }
 };
 
 import NavbarWrapper from "./components/NavbarWrapper";
