@@ -3,19 +3,11 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { isAdmin } from "@/app/lib/admin-auth";
 
-function checkAuth(req: Request) {
-  const username = req.headers.get("x-admin-username");
-  const password = req.headers.get("x-admin-password");
-
-  return (
-    username === process.env.ADMIN_USERNAME &&
-    password === process.env.ADMIN_PASSWORD
-  );
-}
 
 export async function GET(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -30,7 +22,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -47,7 +39,7 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -87,7 +79,7 @@ export async function PUT(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

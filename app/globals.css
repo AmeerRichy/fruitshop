@@ -1,26 +1,3 @@
 @import "tailwindcss";
-
-:root {
-  --background: #fdeded;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+:root{--green:#176b3a;--green-dark:#0d4b29;--lime:#eaf5df;--cream:#fbfcf7;--ink:#173021;--muted:#68766d;--orange:#f39b36}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font-sans),sans-serif}button,a,input,select,textarea{font:inherit}button,a{touch-action:manipulation}.display{font-family:var(--font-display),serif}.container-site{width:min(1180px,calc(100% - 32px));margin-inline:auto}.section{padding:72px 0}.card{background:#fff;border:1px solid #e6ece4;border-radius:24px;box-shadow:0 10px 35px rgba(22,70,39,.06)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.75rem 1.25rem;border-radius:999px;font-weight:800;transition:.2s}.btn-primary{background:var(--green);color:white}.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px)}.btn-secondary{background:white;color:var(--green);border:1px solid #cbdacb}.field{width:100%;min-height:48px;border:1px solid #d7e1d5;border-radius:14px;background:white;padding:.75rem 1rem;outline:none}.field:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(23,107,58,.12)}.label{display:block;margin-bottom:.4rem;font-size:.82rem;font-weight:800}.badge{display:inline-flex;border-radius:999px;padding:.35rem .7rem;background:var(--lime);color:var(--green-dark);font-size:.75rem;font-weight:800}.price{font-variant-numeric:tabular-nums}.no-scrollbar::-webkit-scrollbar{display:none}@media(max-width:767px){.container-site{width:min(100% - 24px,1180px)}.section{padding:48px 0}}@media print{.no-print{display:none!important}body{background:white}.invoice{box-shadow:none!important;border:0!important}}

@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/lib/mongodb";
+import { fallbackCategories } from "@/app/lib/fallback-data";
 
 export async function GET() {
   try {
@@ -17,11 +18,6 @@ export async function GET() {
   } catch (error) {
     console.error("Categories API error:", error);
 
-    return NextResponse.json(
-      {
-        error: "Failed to fetch categories",
-      },
-      { status: 500 }
-    );
+    return NextResponse.json(fallbackCategories, { headers: { "x-data-source": "fallback" } });
   }
 }

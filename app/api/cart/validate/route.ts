@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { calculateCheckout, CheckoutError } from "@/app/lib/orders";
+export async function POST(req: Request) { try { const result = await calculateCheckout(await req.json()); return NextResponse.json({ items: result.orderItems, subtotal: result.subtotal, discount: result.discount, deliveryFee: result.deliveryFee, total: result.total }); } catch (e) { return NextResponse.json({ error: e instanceof Error ? e.message : "Unable to validate cart." }, { status: e instanceof CheckoutError ? e.status : 500 }); } }

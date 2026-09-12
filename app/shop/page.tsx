@@ -1,0 +1,1 @@
+import{Suspense}from"react";import Footer from"../components/footer";import ShopClient from"./ShopClient";export const metadata={title:"Shop Fresh Fruit",description:"Shop premium fresh fruit, seasonal picks and fruit boxes delivered in Lahore."};export default function Shop(){return <><Suspense fallback={<div className="min-h-screen"/>}><ShopClient/></Suspense><Footer/></>}

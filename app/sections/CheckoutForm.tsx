@@ -489,7 +489,7 @@ Please confirm availability and delivery time.`;
                     <div className="max-h-[380px] space-y-4 overflow-auto pr-1">
                       {cart.map((item) => (
                         <div
-                          key={item.id}
+                          key={item.productId}
                           className="flex items-center gap-4 rounded-2xl border border-pink-100 bg-[#FCF8F8] p-3"
                         >
                           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-pink-100 bg-white">

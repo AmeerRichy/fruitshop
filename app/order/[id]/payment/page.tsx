@@ -1,0 +1,1 @@
+import{Suspense}from"react";import PaymentClient from"./PaymentClient";export const metadata={title:"Complete Payment"};export default async function Page({params}:{params:Promise<{id:string}>}){const{id}=await params;return <Suspense fallback={<p className="py-20 text-center">Loading…</p>}><PaymentClient id={id}/></Suspense>}

@@ -1,0 +1,1 @@
+import{Suspense}from"react";import OrderClient from"./OrderClient";export default async function Page({params}:{params:Promise<{id:string}>}){const{id}=await params;return <main className="container-site max-w-4xl py-10"><Suspense><OrderClient id={id}/></Suspense></main>}

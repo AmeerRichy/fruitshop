@@ -1,0 +1,1 @@
+import{Suspense}from"react";import SuccessClient from"./SuccessClient";export const metadata={title:"Order Confirmed"};export default async function Success({params}:{params:Promise<{id:string}>}){const{id}=await params;return <main className="container-site max-w-4xl py-12"><Suspense fallback={<p>Loading order…</p>}><SuccessClient id={id}/></Suspense></main>}

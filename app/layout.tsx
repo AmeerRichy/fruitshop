@@ -1,16 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { CartProvider } from "./context/CartContext";
-import Navbar from "./components/navbar";
-
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Elegance Essentials",
-  description: "Experience the true essence of elegance.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  title: { default: "Fruit Shop | Fresh Fruit Delivery Lahore", template: "%s | Fruit Shop" },
+  description: "Premium, quality-checked fresh fruit delivered across Lahore with secure online payment and cash on delivery.",
   icons: {
     icon: "/logo.png",
   }
@@ -21,7 +16,7 @@ import NavbarWrapper from "./components/NavbarWrapper";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <CartProvider>
           <NavbarWrapper />
           {children}

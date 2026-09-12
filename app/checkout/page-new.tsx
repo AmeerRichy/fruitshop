@@ -1,0 +1,1 @@
+import CheckoutManual from"./CheckoutManual";import Footer from"../components/footer";export const metadata={title:"Checkout"};export default function Checkout(){return <><CheckoutManual/><Footer/></>}

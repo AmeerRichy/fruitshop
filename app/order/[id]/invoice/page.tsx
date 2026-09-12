@@ -1,0 +1,1 @@
+import{Suspense}from"react";import InvoiceClient from"./InvoiceClient";export const metadata={title:"Invoice"};export default async function Invoice({params}:{params:Promise<{id:string}>}){const{id}=await params;return <main className="container-site py-10"><Suspense fallback={<p>Loading…</p>}><InvoiceClient id={id}/></Suspense></main>}

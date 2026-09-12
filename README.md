@@ -1,3 +1,3 @@
-# eleganceessantials
+# Fruit Shop
 
-Welcome to the Elegance Essentials shopping application.
+Welcome to the Fruit Shop shopping application.

@@ -3,23 +3,15 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import clientPromise from "@/app/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { isAdmin } from "@/app/lib/admin-auth";
 
-function checkAuth(req: Request) {
-  const username = req.headers.get("x-admin-username");
-  const password = req.headers.get("x-admin-password");
-
-  return (
-    username === process.env.ADMIN_USERNAME &&
-    password === process.env.ADMIN_PASSWORD
-  );
-}
 
 function escapeRegex(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 export async function GET(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -66,15 +58,6 @@ export async function GET(req: Request) {
         .sort({ _id: -1 })
         .skip(skip)
         .limit(limit)
-        .project({
-          name: 1,
-          slug: 1,
-          price: 1,
-          discountPrice: 1,
-          category: 1,
-          image: 1,
-          description: 1,
-        })
         .toArray(),
 
       productsCollection.countDocuments(query),
@@ -95,20 +78,21 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
     const client = await clientPromise;
     const db = client.db("elegance_essentials");
-    const body = await req.json();
+    const body = await req.json(); const now = new Date();
 
     if (Array.isArray(body)) {
-      const result = await db.collection("products").insertMany(body);
+      const result = await db.collection("products").insertMany(body.map((p:any)=>({...p,createdAt:now,updatedAt:now})));
       return NextResponse.json(result);
     }
 
+    body.createdAt = now; body.updatedAt = now; body.images = body.images?.length ? body.images : body.image ? [body.image] : [];
     const result = await db.collection("products").insertOne(body);
     return NextResponse.json(result);
   } catch (e) {
@@ -118,7 +102,7 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -134,7 +118,7 @@ export async function PUT(req: Request) {
 
     const result = await db.collection("products").updateOne(
       { _id: new ObjectId(_id) },
-      { $set: updateData }
+      { $set: { ...updateData, updatedAt: new Date(), images: updateData.images?.length ? updateData.images : updateData.image ? [updateData.image] : [] } }
     );
 
     return NextResponse.json(result);
@@ -145,7 +129,7 @@ export async function PUT(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!checkAuth(req)) {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -166,9 +150,7 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: "No valid IDs" }, { status: 400 });
     }
 
-    const result = await db.collection("products").deleteMany({
-      _id: { $in: validIds },
-    });
+    const result = await db.collection("products").updateMany({ _id: { $in: validIds } }, { $set: { archived: true, available: false, updatedAt: new Date() } });
 
     return NextResponse.json(result);
   } catch (e) {
